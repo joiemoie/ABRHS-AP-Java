@@ -1,0 +1,73 @@
+
+public class BinarySearchTree {
+
+	private TreeNode root;
+	private int size;
+	
+	
+	public void add(Integer x){
+		add(x,root);
+	}
+	
+	public void add(Integer x, TreeNode node){
+		if(size == 0) {
+			root = new TreeNode(x);
+			size++;
+		}
+		else{
+			if(x <= node.getValue()){
+				if(node.getNextLeft().equals(null)) {
+					node.setNextLeft(new TreeNode(x));
+					size++;
+				}
+				else add(x,node.getNextLeft());
+			}
+			else{
+				if(node.getNextRight().equals(null)) {
+					node.setNextRight(new TreeNode(x));
+					size++;
+				}
+				else add(x,node.getNextRight());
+			}
+				
+		}
+	}
+	
+	public boolean contains(Integer x){return contains(x,root);}
+	
+	public boolean contains(Integer x, TreeNode node){
+		if(node.equals(null)) return false;
+		if(node.getValue() == x) return true;
+		
+		if(x <= node.getValue()){
+			return contains(x,node.getNextLeft());
+		}
+		else{
+			return contains(x,node.getNextRight());
+		}
+				
+	}
+	
+	public int size(){return size;}
+	
+	public String toString(){
+		
+		return "";
+	}
+	
+	public String preorderToString(){return "";}
+	
+	public String postorderToString(){return "";}
+	
+	public static void main(String[] args) {
+		BinarySearchTree tree = new BinarySearchTree();
+		tree.add(10);
+		tree.add(15);
+		tree.add(12);
+		tree.add(9);
+		tree.add(30);
+		System.out.println(tree.contains(12));
+
+	}
+
+}

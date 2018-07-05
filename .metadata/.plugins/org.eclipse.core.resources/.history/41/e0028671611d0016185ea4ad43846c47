@@ -1,0 +1,33 @@
+
+public class BinarySearchTree {
+
+	private TreeNode root;
+	private int size;
+	
+	
+	public void add(Integer x){
+		if(size == 0) root = new TreeNode(x);
+		else{
+			
+		}
+	}
+	
+	public void add(Integer x, TreeNode node){
+		
+	}
+	
+	public boolean contains(Integer x){return false;}
+	
+	public int size(){return size;}
+	
+	public String toString(){return "";}
+	
+	public String preorderToString(){return "";}
+	
+	public String postorderToString(){return "";}
+	
+	public static void main(String[] args) {
+
+	}
+
+}

@@ -1,0 +1,356 @@
+import java.util.ArrayList;
+
+public class SortingAlgorithms {
+
+	public static void selectionSort(int[] list){
+		for(int i = 0; i<list.length; i++){
+			int min = list[i];
+			int minIndex = i;
+			for(int j = i + 1; j < list.length; j++){
+				if(list[j]<min){
+					min = list[j];
+					minIndex = j;
+				}
+			}
+			int temp = list[i];
+			list[i] = min;
+			list[minIndex] = temp;
+		}
+	}
+	
+	public static void selectionSort(ArrayList<String> list){
+		for(int i = 0; i<list.size(); i++){
+			String min = list.get(i);
+			int minIndex = i;
+			for(int j = i + 1; j < list.size(); j++){
+				if(list.get(j).compareTo(min)<0){
+					min = list.get(j);
+					minIndex = j;
+				}
+			}
+			list.set(i,list.set(minIndex, list.get(i)));
+		}
+	}
+	
+	public static void insertionSort(int[] list){
+		for(int i = 0; i<list.length; i++){
+			int temp = list[i];
+			int j = i;
+			while(j>0 && temp<list[j-1]){
+
+				list[j] = list[j-1];
+				j--;
+			}
+			list[j] = temp;
+		}
+	}
+	
+	public static void insertionSort(ArrayList<String> list){
+		for(int i = 0; i<list.size(); i++){
+			String temp = list.get(i);
+			int j = i;
+			while(j>0 && temp.compareTo(list.get(j-1))<0){
+				list.set(j, list.get(j-1));
+				j--;
+			}
+			list.set(j, temp);
+		}
+	}
+	
+	public static void mergeSort(int[] list){
+		mergeSort(list, new int[(list.length+1)/2], 0, list.length);
+	}
+	
+	public static void mergeSort(int[] list, int[] sortedArray, int start, int end){
+		if(end-start>1){
+			int middle = (start+end+1)/2;
+			mergeSort(list, sortedArray, start, middle);
+			mergeSort(list, sortedArray, middle, end);
+			int j = 0;
+			int k = middle;
+			
+			for(int i = 0; i<(end-start+1)/2; i++){
+				sortedArray[i] = list[start+i];
+			}
+
+			for(int i = 0; i<end-start && j<middle-start; i++){
+				if(k==end){
+					list[start+i] = sortedArray[j++];
+				}
+				else{
+					list[start+i] = (sortedArray[j]<list[k])?sortedArray[j++]:list[k++];
+				}
+			}
+			
+		}
+	}
+	
+	
+	public static void mergeSort(ArrayList<String> list){
+		mergeSort(list, new ArrayList<String>((list.size()+1)/2), 0, list.size());
+	}
+	
+	public static void mergeSort(ArrayList<String> list, ArrayList<String> sortedArray, int start, int end){
+		if(end-start>1){
+			int middle = (start+end+1)/2;
+			mergeSort(list, sortedArray, start, middle);
+			mergeSort(list, sortedArray, middle, end);
+			int j = 0;
+			int k = middle;
+			for(int i = 0; i<(end-start+1)/2; i++){
+				sortedArray.add(i,list.get(start+i));
+			}
+
+			for(int i = 0; i<end-start && j<middle-start; i++){
+				if(k==end){
+					list.set(start+i, sortedArray.get(j++));
+				}
+				else{
+					list.set(start+i, (sortedArray.get(j).compareTo(list.get(k))<0)?sortedArray.get(j++):list.get(k++));
+				}
+			}
+		}
+	}
+	
+	public static void quickSort(int[] list){
+		quickSort(list, 0, list.length);
+	}
+	
+	public static void quickSort(int[] list, int start, int end){
+		if(end-start>1){
+			int pivot = list[start];
+			int i = start;
+			int j = end-1;
+			while(i<=j){
+				if(list[i]>pivot && list[j]<=pivot){
+					int temp = list[i];
+					list[i] = list[j];
+					list[j] = temp;
+				}
+				if(list[i]<=pivot){i++;}
+				if(list[j]>pivot){j--;}
+				
+			}
+			int temp = list[start];
+			list[start] = list[i-1];
+			list[i-1] = temp;
+			quickSort(list,start,i-1);
+			quickSort(list,i,end);
+			
+		}
+	}
+	
+	public static void bogoSort(int[] list){
+		while(!isSorted(list)) randomize(list);
+	}
+	
+	public static void randomize(int[] list){
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		for(int i = 0; i<list.length; i++){
+			indices.add(i);
+		}
+		int[] copy = new int[list.length];
+		for(int i = 0; i<list.length; i++) copy[i] = list[i];
+		int i = 0;
+		while(indices.size()>0){
+			list[indices.remove((int) (Math.random()*indices.size()))] = copy[i++];
+		}
+	}
+	
+	public static boolean isSorted(int[] list){
+		for(int i = 0; i<list.length-1; i++){
+			if(list[i+1]<list[i]) return false;
+		}
+		return true;
+	}
+	public static void quickSort(ArrayList<String> list){
+		quickSort(list, 0, list.size());
+	}
+	
+	public static void quickSort(ArrayList<String> list, int start, int end){
+		if(end-start>1){
+			String pivot = list.get(start);
+			int i = start;
+			int j = end-1;
+			while(i<=j){
+				if(list.get(i).compareTo(pivot)>0 && list.get(j).compareTo(pivot)<=0){
+					list.set(i, list.set(j, list.get(i)));
+				}
+				if(list.get(i).compareTo(pivot)<=0){i++;}
+				if(list.get(j).compareTo(pivot)>0){j--;}
+				
+			}
+			list.set(start, list.set(i-1, list.get(start)));
+			quickSort(list,start,i-1);
+			quickSort(list,i,end);
+			
+		}
+	}
+	
+	public static void bubbleSort(int[] list){
+		int largest;
+		int end = list.length;
+		boolean hasChanged = false;
+		do{
+			largest = list[0];
+			for(int i = 0; i<end-1; i++){
+				
+				if(largest>list[i+1]){
+					list[i] = list[i+1];
+					hasChanged = true;
+				}
+				else{
+					list[i] = largest;
+					largest = list[i+1];
+				}
+			}
+			list[end-1] = largest;
+			end--;
+		}while(end>1 && hasChanged);
+	}
+	
+	public static void bubbleSort(ArrayList<String> list){
+		String largest;
+		int end = list.size();
+		boolean hasChanged = false;
+		do{
+			largest = list.get(0);
+			for(int i = 0; i<end-1; i++){
+				
+				if(largest.compareTo(list.get(i+1))>0){
+					list.set(i, list.get(i+1));
+					hasChanged = true;
+				}
+				else{
+					list.set(i, largest);
+					largest = list.get(i+1);
+				}
+			}
+			list.set(end-1, largest);
+			end--;
+		}while(end>1 && hasChanged);
+	}
+	
+	//this sorts the the array if you know the range of values in the array. 
+	//ideally this should be O(n)
+	public static void rangeSort(int[] list,int min,int max){
+		int[] range = new int[max-min+1];
+		for(int i = 0; i<list.length; i++){
+			range[list[i]-min] += 1;
+		}
+		int i = 0;
+		for(int j = 0; j < range.length; j++){
+			for(int k = 0; k<range[j]; k++){
+				list[i]=j+min;
+				i++;
+			}
+		}
+	}
+	
+	public static void radixSort(int[] list){
+		int maxDigits = 0;
+		for(int values:list){
+			if(maxDigits<String.valueOf(values).length())
+				maxDigits = String.valueOf(values).length();
+		}
+		//sorts ignoring the negative sign
+		for(int i = 0; i<maxDigits+1; i++){
+			ArrayList<ArrayList<Integer>> containers = new ArrayList<ArrayList<Integer>>();
+			for(int j = 0; j<10; j++){
+				containers.add(new ArrayList<Integer>());
+			}
+			for(int values:list){
+				containers.get(Math.abs((int) (values%Math.pow(10, i)/Math.pow(10, i-1)))).add(values);
+			}
+			int j = 0;
+			for(int k = 0; k < 10; k++){
+				for(int l = 0; l<containers.get(k).size(); l++){
+					list[j++] = containers.get(k).get(l);
+				}
+			}
+		}
+		//Sorts based on the negative sign
+		ArrayList<ArrayList<Integer>> containers = new ArrayList<ArrayList<Integer>>();
+		for(int j = 0; j<2; j++){
+			containers.add(new ArrayList<Integer>());
+		}
+		for(int values:list){
+			containers.get(values<0?0:1).add(values);
+		}
+		int j = 0;
+		for(int l = containers.get(0).size()-1; l>-1; l--)
+			list[j++] = containers.get(0).get(l);
+		for(int l = 0; l<containers.get(1).size(); l++)
+			list[j++] = containers.get(1).get(l);
+	}
+	
+	public static void cocktailShakerSort(int[] list){
+		int largest;
+		int smallest;
+		int end = list.length;
+		int beginning = 0;
+		boolean hasChanged = false;
+		do{
+			largest = list[beginning];
+			for(int i = beginning; i<end-1; i++){
+				
+				if(largest>list[i+1]){
+					list[i] = list[i+1];
+					hasChanged = true;
+				}
+				else{
+					list[i] = largest;
+					largest = list[i+1];
+				}
+			}
+			list[end-1] = largest;
+			end--;
+			smallest = list[end-1];
+			for(int i = end-1; i>beginning; i--){
+				
+				if(smallest<list[i-1]){
+					list[i] = list[i-1];
+				}
+				else{
+					list[i] = smallest;
+					smallest = list[i-1];
+				}
+			}
+			beginning++;
+		}while(end>beginning  && hasChanged);
+	}
+	
+	public static void printArray(int[] array){
+		for(int value:array){
+			System.out.print(value + " ");
+		}
+		System.out.println();
+	}
+	
+	public static void printArray(ArrayList<String> array){
+		for(String value:array){
+			System.out.print(value + " ");
+		}
+		System.out.println();
+	}
+	
+	public static void main(String[] args) {
+		int[] array = new int[5];
+		for(int i = 0; i<5; i++){
+			array[i] = (int) (Math.random()*20);
+		}
+		printArray(array);
+		bogoSort(array);
+		printArray(array);
+		ArrayList<String> array2 = new ArrayList<String>();
+		array2.add("hello");
+		array2.add("bob");
+		array2.add("cat");
+		array2.add("apple");
+		printArray(array2);
+		bubbleSort(array2);
+		printArray(array2);
+
+	}
+
+}

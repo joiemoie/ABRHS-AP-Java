@@ -1,0 +1,21 @@
+
+public class TreeNode {
+	private Integer value;
+	private TreeNode nextLeft;
+	private TreeNode nextRight;
+	
+	public TreeNode(int s){
+		value = s;
+		nextLeft = null;
+		nextRight = null;
+	}
+	
+	public int getValue(){return value;}
+	public TreeNode getNextLeft(){return nextLeft;}
+	public TreeNode getNextRight(){return nextRight;}
+	
+	public void setValue(int s){value = s;}
+	public void setNextLeft(TreeNode nextLeft){this.nextLeft = nextLeft;}
+	public void setNextRight(TreeNode nextRight){this.nextRight = nextRight;} 
+
+}

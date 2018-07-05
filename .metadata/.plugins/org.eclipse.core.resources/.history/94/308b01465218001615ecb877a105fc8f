@@ -1,0 +1,76 @@
+import java.util.ArrayList;
+
+public class StudentList {
+	private StudentNode head;
+	private int length;
+	
+	public StudentList(){
+		length = 0;
+	}
+	
+	public void insertByLastName(Student s){
+		if(length == 0){
+			head = new StudentNode(s);
+			length++;
+		}
+		else{
+			int position = 0;
+			StudentNode currentNode = head;
+			StudentNode next = new StudentNode(s);
+			while(position < length-1){
+				position++;
+				currentNode = currentNode.getNext();
+			}
+			StudentNode previousNext = currentNode.getNext();
+			currentNode.setNext(next);
+			next.setNext(previousNext);
+			length++;
+		}
+		
+	}
+	
+	public void removeStudent(Student s){
+		StudentNode currentNode = head;
+		while(!currentNode.getNext().equals(null)||!currentNode.getNext().getValue().equals(s))
+			currentNode = currentNode.getNext();
+		currentNode.setNext(null);
+	}
+	
+	public void sortByAverage(){}
+	
+	public String toString(){
+		String str = "";
+		StudentNode currentNode = head;
+		int position = 0;
+		while(position < length-1){
+			position++;
+			str += currentNode.getValue().toString() + " ";
+			currentNode = currentNode.getNext();
+		}
+		return str;
+	}
+	public static void main(String[] args) {
+		Student edgars = new Student("Thomas","Edgars",89);
+		Student smith1 = new Student("Smith","Jennifer",86);
+		Student umberton = new Student("Umberton","Harold",78);
+		Student martin = new Student("Martin","Frank",60);
+		Student andrews = new Student("Andrews","Jeremy",83);
+		Student roberts = new Student("Roberts","Laura",93);
+		Student lincoln = new Student("Lincoln","Adele",85);
+		Student smith2 = new Student("Smith","Peter",91);
+		Student peterson = new Student("Peterson","Larry",72);
+		StudentList list = new StudentList();
+		list.insertByLastName(edgars);
+		list.insertByLastName(smith1);
+		list.insertByLastName(umberton);
+		list.insertByLastName(martin);
+		list.insertByLastName(andrews);
+		list.insertByLastName(roberts);
+		list.insertByLastName(lincoln);
+		list.insertByLastName(smith2);
+		list.insertByLastName(peterson);
+		System.out.println(list);
+
+	}
+
+}

@@ -1,0 +1,22 @@
+
+public class TreeNode {
+	private Integer value;
+	private TreeNode next;
+	
+	public TreeNode(int s){
+		value = s;
+		next = null;
+	}
+	
+	public TreeNode(Integer s, TreeNode next){
+		value = s;
+		this.next = next;
+	}
+	
+	public int getValue(){return value;}
+	public TreeNode getNext(){return next;}
+	
+	public void setValue(int s){value = s;}
+	public void setNext(TreeNode next){this.next = next;} 
+
+}

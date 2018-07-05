@@ -1,0 +1,144 @@
+import java.util.ArrayList;
+
+public class StudentList {
+	private StudentNode head;
+	private int length;
+	
+	public StudentList(){
+		length = 0;
+	}
+	
+	public void insertByLastName(Student s){
+		if(length == 0){
+			head = new StudentNode(s);
+			length++;
+		}
+		else{
+			int position = 0;
+			StudentNode currentNode = head;
+			StudentNode node = new StudentNode(s);
+			if(s.getLastName().compareTo(currentNode.getValue().getLastName())<=0
+					|| s.getLastName().compareTo(currentNode.getValue().getLastName())==0
+							&& s.getFirstName().compareTo(currentNode.getValue().getFirstName())<0){
+					head = node;
+					node.setNext(currentNode);
+					length++;
+			}
+			else{
+				while(position < length-1 && (s.getLastName().compareTo(currentNode.getNext().getValue().getLastName())>=0
+						|| s.getLastName().compareTo(currentNode.getNext().getValue().getLastName())==0
+							&& s.getFirstName().compareTo(currentNode.getNext().getValue().getFirstName())<0)){
+					position++;
+					currentNode = currentNode.getNext();
+			
+				}
+			
+				StudentNode nextNode = currentNode.getNext();
+				node.setNext(nextNode);
+				currentNode.setNext(node);
+				length++;
+
+			}
+		}
+		
+	}
+	
+	public void removeStudent(String firstName, String lastName){
+		StudentNode currentNode = head;
+		int position = 0;
+		if(position == 0 &&
+			currentNode.getValue().getFirstName().equals(firstName) && 
+			currentNode.getValue().getLastName().equals(lastName)){
+				head = currentNode.getNext();
+				length--;
+			}
+		
+		else{
+			while(position < length-1 && 
+					!(currentNode.getNext().getValue().getFirstName().equals(firstName) && 
+					currentNode.getNext().getValue().getLastName().equals(lastName))){
+				position++;
+				currentNode = currentNode.getNext();
+			}
+			if(position<length-1){
+				currentNode.setNext(currentNode.getNext().getNext());
+				length--;
+			}
+			else{
+				currentNode.setNext(currentNode.getNext());
+				length--;
+			}
+		}
+	}
+	
+	public void sortByAverage(){
+		StudentNode node1 = head;
+		StudentNode prevNode = null;
+		for(int i = 0; i<length; i++){
+			int min = node1.getValue().getGPA();
+			StudentNode minNode = node1;
+			StudentNode prevMinNode = prevNode;
+			StudentNode node2 = node1.getNext();
+			StudentNode prevNode2 = node1;
+			System.out.println(head);
+			for(int j = i + 1; j<length; j++){
+				if(node2.getValue().getGPA()<min){
+					min = node2.getValue().getGPA();
+					prevMinNode = prevNode2;
+					minNode = node2;
+				}
+				prevNode2 = node2;
+				node2=node2.getNext();
+			}
+			if(prevNode == null) head = minNode;
+			StudentNode afterMinNode = minNode.getNext();
+			minNode.setNext(node1.getNext());
+			prevMinNode.setNext(node1);
+			node1.setNext(afterMinNode);
+			System.out.println(this);
+			prevNode = minNode;
+			node1 = prevNode.getNext();
+		}
+	}
+	
+	public String toString(){
+		String str = "";
+		StudentNode currentNode = head;
+		int position = 0;
+		while(position < length){
+			position++;
+			str += currentNode.getValue().toString() + "; ";
+			currentNode = currentNode.getNext();
+		}
+		return str;
+	}
+	public static void main(String[] args) {
+		Student edgars = new Student("Thomas","Edgars",89);
+		Student smith1 = new Student("Jennifer","Smith",86);
+		Student umberton = new Student("Harold","Umberton",78);
+		Student martin = new Student("Frank","Martin",60);
+		Student andrews = new Student("Jeremy","Andrews",83);
+		Student roberts = new Student("Laura","Roberts",93);
+		Student lincoln = new Student("Adele","Lincoln",85);
+		Student smith2 = new Student("Peter","Smith",91);
+		Student peterson = new Student("Larry","Peterson",72);
+		StudentList list = new StudentList();
+		list.insertByLastName(edgars);
+		list.insertByLastName(smith1);
+		list.insertByLastName(umberton);
+		list.insertByLastName(martin);
+		list.insertByLastName(andrews);
+		list.insertByLastName(roberts);
+		list.insertByLastName(lincoln);
+		list.insertByLastName(smith2);
+		list.insertByLastName(peterson);
+		System.out.println(list);
+		list.removeStudent("Frank", "Martin");
+		System.out.println(list);
+		list.sortByAverage();
+		System.out.println(list);
+		
+
+	}
+
+}
